@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -98,6 +99,16 @@ public class PlayerController : MonoBehaviour {
         scoreText.text = "Pickups Left: " + pickupsRemaining.ToString ();
         if (pickupsRemaining <= 0) {
             winText.text = "You Win!";
+            /**
+             * @TODO Could this be better???
+             */
+            IEnumerator coroutine = this.advanceLevel();
+            StartCoroutine(coroutine);
         }
+    }
+
+    protected IEnumerator advanceLevel() {
+        yield return new WaitForSeconds(10);
+        SceneManager.LoadScene("Level2");
     }
 }
