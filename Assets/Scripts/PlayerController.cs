@@ -10,7 +10,20 @@ public class PlayerController : MonoBehaviour {
      */
     protected float speed = 10.0f;
 
+    /**
+     * The force when on a mobile device
+     */
     protected float mobileForce = 180.0f;
+
+    /**
+     * The current level that the user is on
+     */
+    protected static int currentLevel = 1;
+
+    /**
+     * The final level of the game
+     */
+    protected int finalLevel = 3;
 
     /**
      * Used for updating the display of the score
@@ -108,7 +121,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     protected IEnumerator advanceLevel() {
-        yield return new WaitForSeconds(10);
-        SceneManager.LoadScene("Level2");
+        yield return new WaitForSeconds(5);
+        if(currentLevel < finalLevel) {
+            currentLevel++;
+            SceneManager.LoadScene(
+                "Level" + currentLevel,
+                LoadSceneMode.Single
+            );
+        }
     }
 }
