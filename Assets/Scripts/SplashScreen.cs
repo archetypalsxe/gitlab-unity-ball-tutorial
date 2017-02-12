@@ -29,7 +29,9 @@ public class SplashScreen : MonoBehaviour {
      * Check for any keys being pressed
      */
     void Update() {
-        if (Input.anyKeyDown & ready) {
+        if (
+            (Input.anyKeyDown | Input.touchCount > 0) & ready
+        ) {
             SceneManager.LoadScene("MiniGame", LoadSceneMode.Single);
         }
     }
