@@ -5,52 +5,48 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-    /**
-     * Multiplier of the ball movement, makes the ball move faster
-     */
-    protected float speed = 10.0f;
+  // The controller of the level
+  public static LevelController levelController;
 
-    /**
-     * The force when on a mobile device
-     */
-    protected float mobileForce = 180.0f;
+  /**
+   * Used for updating the display of the score
+   */
+  public Text scoreText;
 
-    /**
-     * The current level that the user is on
-     */
-    protected static int currentLevel = 1;
+  /**
+   * The text that is displayed when you collect all of the pickups
+   */
+  public Text winText;
 
-    /**
-     * The final level of the game
-     */
-    protected int finalLevel = 3;
+  /**
+   * Multiplier of the ball movement, makes the ball move faster
+   */
+  protected float speed = 10.0f;
 
-    /**
-     * Used for updating the display of the score
-     */
-    public Text scoreText;
-
-    /**
-     * The text that is displayed when you collect all of the pickups
-     */
-    public Text winText;
+  /**
+   * The force when on a mobile device
+   */
+  protected float mobileForce = 180.0f;
 
 	/**
 	 * Private function for holding the rigid body reference
 	 */
 	private Rigidbody rigidBody;
 
-    /**
-     * How many of the pickups have been collected
-     */
-    private int pickupsRemaining;
+  /**
+   * How many of the pickups have been collected
+   */
+  private int pickupsRemaining;
 
-    /**
-     * Called when the game is started, the first frame
-     */
+  /**
+   * Called when the game is started, the first frame
+   */
 	void Start()
 	{
-		rigidBody = GetComponent<Rigidbody>();
+    if(levelController == null) {
+      levelController = new LevelController();
+    }
+    rigidBody = GetComponent<Rigidbody>();
         SetScoreText();
         winText.text = "";
 	}
@@ -122,10 +118,10 @@ public class PlayerController : MonoBehaviour {
 
     protected IEnumerator advanceLevel() {
         yield return new WaitForSeconds(5);
-        if(currentLevel < finalLevel) {
-            currentLevel++;
+        if(levelController.currentLevel < levelController.finalLevel) {
+            levelController.currentLevel++;
             SceneManager.LoadScene(
-                "Level" + currentLevel,
+                "Level" + levelController.currentLevel,
                 LoadSceneMode.Single
             );
         }
