@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour {
         levelController.advanceLevel();
         if(!levelController.hasBeatGame()) {
             SceneManager.LoadScene(
-                "Level" + levelController.currentLevel,
+                "Level" + levelController.getCurrentLevel(),
                 LoadSceneMode.Single
             );
         }
