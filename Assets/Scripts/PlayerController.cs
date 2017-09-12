@@ -5,9 +5,6 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-  // The controller of the level
-  public static LevelController levelController;
-
   /**
    * Used for updating the display of the score
    */
@@ -17,6 +14,9 @@ public class PlayerController : MonoBehaviour {
    * The text that is displayed when you collect all of the pickups
    */
   public Text winText;
+
+  // The controller of the level
+  protected static LevelController levelController;
 
   /**
    * Multiplier of the ball movement, makes the ball move faster
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
    */
   protected float mobileForce = 180.0f;
 
-	/**
+  /**
 	 * Private function for holding the rigid body reference
 	 */
 	private Rigidbody rigidBody;
@@ -118,8 +118,8 @@ public class PlayerController : MonoBehaviour {
 
     protected IEnumerator advanceLevel() {
         yield return new WaitForSeconds(5);
-        if(levelController.currentLevel < levelController.finalLevel) {
-            levelController.currentLevel++;
+        levelController.advanceLevel();
+        if(!levelController.hasBeatGame()) {
             SceneManager.LoadScene(
                 "Level" + levelController.currentLevel,
                 LoadSceneMode.Single

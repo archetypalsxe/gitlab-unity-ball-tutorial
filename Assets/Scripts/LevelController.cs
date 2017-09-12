@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelController : MonoBehaviour {
+public class LevelController  {
 
 	// The level number that the player is on
 	public int currentLevel = 1;
@@ -10,13 +10,16 @@ public class LevelController : MonoBehaviour {
 	// The final level that the player can play
 	public int finalLevel = 3;
 
-	// Use this for initialization
-	void Start () {
-		this.currentLevel = 1;
+	/*
+		Returns whether or not the game has been beat. Should be called after
+		the level has been advanced
+	 */
+	public bool hasBeatGame() {
+		return currentLevel > finalLevel;
 	}
 
-	// Update is called once per frame
-	void Update () {
-
+	// Advance the current level to the next level
+	public void advanceLevel() {
+		this.currentLevel++;
 	}
 }
