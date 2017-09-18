@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour {
 
   // Display for the timer
-  public string timerText;
+  public Text timerText;
 
 	// The level number that the player is on
 	protected static int currentLevel = 1;
@@ -16,6 +17,24 @@ public class LevelController : MonoBehaviour {
 
   // The time that the level was started
   protected Timer startTime;
+
+  // How much time for this level
+  protected float timeToBeat = 10;
+
+  // Called when the level is first started
+  public void Start () {
+    this.startTime = new Timer (1000);
+  }
+
+  public void Update () {
+    timeToBeat -= Time.deltaTime;
+    if(this.timeToBeat <= 0) {
+      Debug.Log("Time out!");
+      this.timerText.text = "Times Out!!!";
+    } else {
+      this.timerText.text = ((int) timeToBeat).ToString();
+    }
+  }
 
 	// Returns the level that the user is currently on
 	public int getCurrentLevel() {
