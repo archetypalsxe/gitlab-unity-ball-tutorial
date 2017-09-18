@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
   public Text winText;
 
   // The controller of the level
-  protected static LevelController levelController;
+  public LevelController levelController;
 
   /**
    * Multiplier of the ball movement, makes the ball move faster
@@ -43,9 +43,6 @@ public class PlayerController : MonoBehaviour {
    */
 	void Start()
 	{
-    if(levelController == null) {
-      levelController = new LevelController();
-    }
     rigidBody = GetComponent<Rigidbody>();
         SetScoreText();
         winText.text = "";
