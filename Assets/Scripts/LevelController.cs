@@ -9,6 +9,9 @@ public class LevelController : MonoBehaviour {
   // Display for the timer
   public Text timerText;
 
+  // The allowed to beat the level
+  public float timeToBeat = 30;
+
 	// The level number that the player is on
 	protected static int currentLevel = 1;
 
@@ -17,9 +20,6 @@ public class LevelController : MonoBehaviour {
 
   // The time that the level was started
   protected Timer startTime;
-
-  // How much time for this level
-  protected float timeToBeat = 30;
 
   // Called when the level is first started
   public void Start () {
