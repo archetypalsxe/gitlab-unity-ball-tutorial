@@ -19,7 +19,7 @@ public class LevelController : MonoBehaviour {
   protected Timer startTime;
 
   // How much time for this level
-  protected float timeToBeat = 10;
+  protected float timeToBeat = 30;
 
   // Called when the level is first started
   public void Start () {
@@ -40,6 +40,7 @@ public class LevelController : MonoBehaviour {
 	public int getCurrentLevel() {
 		return LevelController.currentLevel;
 	}
+
 	/*
 		Returns whether or not the game has been beat. Should be called after
 		the level has been advanced
