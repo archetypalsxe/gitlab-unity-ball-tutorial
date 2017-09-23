@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -56,6 +55,10 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape) == true) {
             Application.Quit();
         }
+        if(this.levelController.isTimeOut()) {
+          winText.text = "Out of Time!!!";
+          this.levelController.repeatLevel();
+        }
     }
 
     /**
@@ -89,14 +92,12 @@ public class PlayerController : MonoBehaviour {
      */
     void OnTriggerEnter (Collider collisionObject)
     {
-        if (collisionObject.gameObject.CompareTag("Pick Up")) {
-            collisionObject.gameObject.SetActive (false);
-            SetScoreText();
+        if(!this.levelController.isTimeOut()) {
+          if (collisionObject.gameObject.CompareTag("Pick Up")) {
+              collisionObject.gameObject.SetActive (false);
+              SetScoreText();
+          }
         }
-        /**
-         * Destroys the other game object that collided with this object
-         */
-        // Destroy(otherObject.gameObject);
     }
 
     protected void SetScoreText ()
@@ -105,22 +106,11 @@ public class PlayerController : MonoBehaviour {
         scoreText.text = "Pickups Left: " + pickupsRemaining.ToString ();
         if (pickupsRemaining <= 0) {
             winText.text = "You Win!";
-            /**
-             * @TODO Could this be better???
-             */
-            IEnumerator coroutine = this.advanceLevel();
-            StartCoroutine(coroutine);
+            this.advanceLevel();
         }
     }
 
-    protected IEnumerator advanceLevel() {
+    protected void advanceLevel() {
         levelController.advanceLevel();
-        yield return new WaitForSeconds(5);
-        if(!levelController.hasBeatGame()) {
-            SceneManager.LoadScene(
-                "Level" + levelController.getCurrentLevel(),
-                LoadSceneMode.Single
-            );
-        }
     }
 }

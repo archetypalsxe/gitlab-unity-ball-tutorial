@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour {
@@ -30,15 +31,18 @@ public class LevelController : MonoBehaviour {
     this.levelBeat = false;
   }
 
+  // Has the player ran out of time?
+  public bool isTimeOut() {
+    return this.timeToBeat <= 0;
+  }
+
   public void Update () {
     if(!this.levelBeat) {
       timeToBeat -= Time.deltaTime;
-      if(this.timeToBeat <= 0) {
-        Debug.Log("Time out!");
-        this.timerText.text = "Times Out!!!";
-      } else {
-        this.timerText.text = ((int) timeToBeat).ToString();
+      if(timeToBeat < 0) {
+        timeToBeat = 0;
       }
+      this.timerText.text = ((int) timeToBeat).ToString();
     }
   }
 
@@ -55,9 +59,28 @@ public class LevelController : MonoBehaviour {
 		return LevelController.currentLevel > LevelController.finalLevel;
 	}
 
+  // Repeat the current level that the user is on
+  public void repeatLevel() {
+    IEnumerator coroutine = this.loadLevel();
+    StartCoroutine(coroutine);
+  }
+
 	// Advance the current level to the next level
   public void advanceLevel() {
     this.levelBeat = true;
     LevelController.currentLevel++;
+    IEnumerator coroutine = this.loadLevel();
+    StartCoroutine(coroutine);
+  }
+
+  // Load up the next level to be played
+  protected IEnumerator loadLevel() {
+    yield return new WaitForSeconds(5);
+    if(!this.hasBeatGame()) {
+        SceneManager.LoadScene(
+            "Level" + this.getCurrentLevel(),
+            LoadSceneMode.Single
+        );
+    }
   }
 }

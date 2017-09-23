@@ -32,7 +32,7 @@ public class SplashScreen : MonoBehaviour {
         if (
             (Input.anyKeyDown | Input.touchCount > 0) & ready
         ) {
-            SceneManager.LoadScene("MiniGame", LoadSceneMode.Single);
+            SceneManager.LoadScene("Level1", LoadSceneMode.Single);
         }
     }
 
