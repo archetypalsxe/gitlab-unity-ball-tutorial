@@ -21,18 +21,24 @@ public class LevelController : MonoBehaviour {
   // The time that the level was started
   protected Timer startTime;
 
+  // Whether or not the level has been beat
+  protected bool levelBeat = false;
+
   // Called when the level is first started
   public void Start () {
     this.startTime = new Timer (1000);
+    this.levelBeat = false;
   }
 
   public void Update () {
-    timeToBeat -= Time.deltaTime;
-    if(this.timeToBeat <= 0) {
-      Debug.Log("Time out!");
-      this.timerText.text = "Times Out!!!";
-    } else {
-      this.timerText.text = ((int) timeToBeat).ToString();
+    if(!this.levelBeat) {
+      timeToBeat -= Time.deltaTime;
+      if(this.timeToBeat <= 0) {
+        Debug.Log("Time out!");
+        this.timerText.text = "Times Out!!!";
+      } else {
+        this.timerText.text = ((int) timeToBeat).ToString();
+      }
     }
   }
 
@@ -50,7 +56,8 @@ public class LevelController : MonoBehaviour {
 	}
 
 	// Advance the current level to the next level
-	public void advanceLevel() {
-		LevelController.currentLevel++;
-	}
+  public void advanceLevel() {
+    this.levelBeat = true;
+    LevelController.currentLevel++;
+  }
 }

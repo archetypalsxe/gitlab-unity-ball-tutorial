@@ -114,8 +114,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     protected IEnumerator advanceLevel() {
-        yield return new WaitForSeconds(5);
         levelController.advanceLevel();
+        yield return new WaitForSeconds(5);
         if(!levelController.hasBeatGame()) {
             SceneManager.LoadScene(
                 "Level" + levelController.getCurrentLevel(),
