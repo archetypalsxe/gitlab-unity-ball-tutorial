@@ -76,11 +76,17 @@ public class LevelController : MonoBehaviour {
   // Load up the next level to be played
   protected IEnumerator loadLevel() {
     yield return new WaitForSeconds(5);
-    if(!this.hasBeatGame()) {
-        SceneManager.LoadScene(
-            "Level" + this.getCurrentLevel(),
-            LoadSceneMode.Single
-        );
+    string nextLevel;
+    if(this.hasBeatGame()) {
+      // Reset back to the first level in case they play again
+      currentLevel = 1;
+      nextLevel = "Victory Screen";
+    } else {
+      nextLevel = "Level" + this.getCurrentLevel();
     }
+    SceneManager.LoadScene(
+        nextLevel,
+        LoadSceneMode.Single
+    );
   }
 }
