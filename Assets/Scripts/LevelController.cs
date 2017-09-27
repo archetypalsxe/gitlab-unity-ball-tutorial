@@ -10,6 +10,9 @@ public class LevelController : MonoBehaviour {
   // Display for the timer
   public Text timerText;
 
+  // The time to beat the level displayed at the end of the level
+  public Text timeText;
+
   // The allowed to beat the level
   public float timeToBeat = 30;
 
@@ -19,16 +22,13 @@ public class LevelController : MonoBehaviour {
 	// The final level that the player can play
 	protected static int finalLevel = 3;
 
-  // The time that the level was started
-  protected Timer startTime;
-
   // Whether or not the level has been beat
   protected bool levelBeat = false;
 
   // Called when the level is first started
   public void Start () {
-    this.startTime = new Timer (1000);
     this.levelBeat = false;
+    this.timeText.text = "";
   }
 
   // Has the player ran out of time?
@@ -67,8 +67,10 @@ public class LevelController : MonoBehaviour {
 
 	// Advance the current level to the next level
   public void advanceLevel() {
+    float timeToBeatLevel = Time.timeSinceLevelLoad;
     this.levelBeat = true;
     LevelController.currentLevel++;
+    this.timeText.text = timeToBeatLevel.ToString("0.00") + " Seconds";
     IEnumerator coroutine = this.loadLevel();
     StartCoroutine(coroutine);
   }
